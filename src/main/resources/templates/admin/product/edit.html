@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+
+<head th:replace="admin/fragments/head :: head"></head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <div th:replace="admin/fragments/header :: header"></div>
+        <div th:replace="admin/fragments/sidebar :: sidebar"></div>
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>Product Edit</h1>
+                <ol class="breadcrumb">
+                    <li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i> Admin Home</a></li>
+                    <li><a th:href="@{/admin/product}">Product</a></li>
+                    <li class="active">Product Edit Page</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <div class="box box-primary">
+                    <form role="form" method="post" th:action="@{/admin/edit-product}" th:object="${product}" enctype="multipart/form-data">
+                        <input type="hidden" class="form-control" id="id" th:field="*{id}">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="ProductName">Product Name :</label>
+                                <input type="text" class="form-control" id="productName" placeholder="Product Name" th:field="*{productName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Price :</label>
+                                <input type="text" class="form-control" id="price" placeholder="Price" th:field="*{price}">
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Image :</label>
+                                <input type="file" class="form-control" id="image" name="fileImage">
+                            </div>
+                            <div class="form-group">
+                                <label>Category :</label>
+                                <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" th:field="*{category.id}">
+                                    <option th:each="category : ${listCate}" th:value="${category.id}" th:text="${category.categoryName}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description :</label>
+                                <textarea name="description" id="description" rows="10" cols="80" th:field="*{description}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <div th:replace="admin/fragments/footer :: footer"></div>
+    </div>
+
+    <div th:replace="admin/fragments/script :: script"></div>
+</body>
+
+</html>
