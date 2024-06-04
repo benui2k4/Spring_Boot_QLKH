@@ -25,18 +25,16 @@ public class CategoryController {
 
 	@GetMapping("/category")
 
-	public String index(Model model, @Param("keyword") String keyword,
+	public String index(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
 			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
 
 		Page<Category> list = this.categoryService.getAll(pageNo);
 
 		if(keyword != null) {
-			list  = this.categoryService.searchCategory(keyword,pageNo);
-			
-			model.addAttribute("keyword", keyword);
-			
+			list  = this.categoryService.searchCategory(keyword,pageNo);	
 		}
 		model.addAttribute("totalPage", list.getTotalPages());
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("currentPage", pageNo);
 		model.addAttribute("list", list);
 

@@ -70,7 +70,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	public Page<Category> getAll(Integer pageNo) {
-		Pageable pageable = PageRequest.of(pageNo - 1, 2);
+		Pageable pageable = PageRequest.of(pageNo - 1, 5);
 		return this.categoryRepository.findAll(pageable);
 	}
 
@@ -78,7 +78,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public Page<Category> searchCategory(String keyword, Integer pageNo) {
 		List list = this.searchCategory(keyword);
 		
-		Pageable pageable = PageRequest.of(pageNo - 1, 2);
+		Pageable pageable = PageRequest.of(pageNo - 1, 5);
 		
 		Integer start = (int) pageable.getOffset();
 		

@@ -31,14 +31,14 @@ public class ProductController {
 	@Autowired
 	private ProductService productService;
 
-	@RequestMapping("/product")
+	@GetMapping("/product")
 	public String index(Model model) {
 		List<Product> listProduct = this.productService.getAll();
 		model.addAttribute("listProduct", listProduct);
 		return "admin/product/index";
 	}
 
-	@RequestMapping("/product-add")
+	@GetMapping("/product-add")
 	public String add(Model model) {
 		Product product = new Product();
 
