@@ -23,9 +23,6 @@
 	background: rgba(0, 0, 0, 0.1)
 }
 
-
-
-
 .skin-blue .main-header .navbar .sidebar-toggle {
 	color: #fff
 }
@@ -57,7 +54,7 @@
 }
 
 .skin-blue .main-header li.user-header {
-	background-color: #3c8dbc
+	background-color: #3e9229
 }
 
 .skin-blue .content-header {
@@ -65,7 +62,7 @@
 }
 
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
-	background-color: #222d32
+	background-color: #3e9229
 }
 
 .skin-blue .user-panel>.info, .skin-blue .user-panel>.info>a {
