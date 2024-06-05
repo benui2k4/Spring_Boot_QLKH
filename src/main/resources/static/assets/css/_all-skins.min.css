@@ -1,5 +1,5 @@
 .skin-blue .main-header .navbar {
-	background-color: #3e9229;
+	background-color: black;
 }
 
 .skin-blue .main-header .navbar .nav>li>a {
@@ -44,7 +44,7 @@
 }
 
 .skin-blue .main-header .logo {
-	background-color: #3e9229;
+	background-color: black;
 	color: #fff;
 	border-bottom: 0 solid transparent;
 }
@@ -54,7 +54,7 @@
 }
 
 .skin-blue .main-header li.user-header {
-	background-color: #3e9229
+	background-color: black;
 }
 
 .skin-blue .content-header {
@@ -62,7 +62,7 @@
 }
 
 .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
-	background-color: #3e9229
+	background-color: black;
 }
 
 .skin-blue .user-panel>.info, .skin-blue .user-panel>.info>a {
