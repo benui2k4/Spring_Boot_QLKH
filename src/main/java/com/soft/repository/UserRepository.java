@@ -7,4 +7,5 @@ import com.soft.models.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	User findByUserName(String userName);
+	
 }
