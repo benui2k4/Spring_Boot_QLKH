@@ -7,5 +7,5 @@ import com.soft.models.User;
 public interface UserService {
 	User findByUserName(String userName);
 	List<User> findAll();
-	
+	  void save(User user);
 }
