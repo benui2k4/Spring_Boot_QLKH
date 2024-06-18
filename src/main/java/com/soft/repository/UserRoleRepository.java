@@ -3,10 +3,9 @@ package com.soft.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.soft.models.User;
+import com.soft.models.UserRole;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long>{
-	User findByUserName(String userName);
-	
+public interface UserRoleRepository extends JpaRepository<UserRole, Long>{
+
 }

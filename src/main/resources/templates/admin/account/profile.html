@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="admin/fragments/head :: head">
+	</div>
+
+
+	
+
+
+<body class="hold-transition skin-blue sidebar-mini">
+	<!-- Site wrapper -->
+	<div class="wrapper">
+		<div th:replace="admin/fragments/header :: header"></div>
+		<!-- =============================================== -->
+		<div th:replace="admin/fragments/sidebar :: sidebar"></div>
+		<!-- =============================================== -->
+		<!-- Content Wrapper. Contains page content -->
+		<div class="content-wrapper">
+			<!-- Content Header (Page header) -->
+			<section class="content-header">
+				<h1>Profile Page</h1>
+				<ol class="breadcrumb">
+					<li><a th:href="@{/admin}"><i class="fa fa-dashboard"></i>
+							Admin Home</a></li>
+					<li><a th:href="@{/admin/profile}">Profile</a></li>
+					<li class="active">Profile Page</li>
+				</ol>
+			</section>
+			<!-- Main content -->
+			<section class="content">
+				
+				
+				  <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin tài khoản</h3>
+                    </div>
+                   
+                </div>
+				
+				
+				
+			</section>
+		</div>
+		<div th:replace="admin/fragments/footer :: footer"></div>
+	</div>
+	<div th:replace="admin/fragments/script :: script"></div>
+
+	
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
