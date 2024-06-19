@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,8 +57,18 @@ public class AdminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/account/management")
-    public String accountManagement(Model model) {
-        List<User> listUsers = userService.findAll(); 
+    public String accountManagement(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
+			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+        Page<User> listUsers = this.userService.getAll(pageNo); 
+        
+        
+        if(keyword != null) {
+        	listUsers  = this.userService.searchUser(keyword,pageNo);	
+		}
+		model.addAttribute("totalPage", listUsers.getTotalPages());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("currentPage", pageNo);
+        
         model.addAttribute("listUsers", listUsers);
         return "admin/account/management";
     }
