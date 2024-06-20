@@ -64,7 +64,7 @@ public class UserController {
 	        userRoleRepository.save(userRole);
 
 	        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
-	        return "redirect:/register";
+	        return "redirect:/login";
 	    }
 
 }

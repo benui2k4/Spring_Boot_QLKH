@@ -30,7 +30,12 @@
 
 		<div class="login-box-body">
 			<p class="login-box-msg">Sign in to start your session</p>
-
+			 <div th:if="${param.success}">
+                <div class="alert alert-success" role="alert">
+                    <strong th:text="${successMessage}"></strong>
+                </div>
+            </div>
+				
 			<form th:action="@{/login}" method="post">
 				<div class="form-group has-feedback">
 					<input type="text" class="form-control" placeholder="User Name"
