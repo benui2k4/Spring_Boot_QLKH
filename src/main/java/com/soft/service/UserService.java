@@ -8,12 +8,14 @@ import com.soft.models.User;
 
 public interface UserService {
 	User findByUserName(String userName);
+
 	List<User> findAll();
-	 void save(User user);
-	 
-	 
-	 List<User> searchUser(String keyword);
-		
-		Page<User> getAll(Integer pageNo);
-		Page<User> searchUser(String keyword , Integer pageNo);
+
+	void save(User user);
+
+	List<User> searchUser(String keyword);
+
+	Page<User> getAll(Integer pageNo);
+
+	Page<User> searchUser(String keyword, Integer pageNo);
 }
