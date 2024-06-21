@@ -19,52 +19,54 @@ import jakarta.validation.Valid;
 
 @Controller
 public class UserController {
-	private UserService userService;
-	private RoleRepository roleRepository;
-	private UserRoleRepository userRoleRepository;
-	private PasswordEncoder passwordEncoder;
+    private UserService userService;
+    private RoleRepository roleRepository;
+    private UserRoleRepository userRoleRepository;
+    private PasswordEncoder passwordEncoder;
 
-	public UserController(UserService userService, RoleRepository roleRepository, UserRoleRepository userRoleRepository,
-			PasswordEncoder passwordEncoder) {
-		this.userService = userService;
-		this.roleRepository = roleRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+    public UserController(UserService userService, RoleRepository roleRepository, UserRoleRepository userRoleRepository,
+            PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.roleRepository = roleRepository;
+        this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
-	@GetMapping("/login")
-	public String logon() {
-		return "admin/login";
-	}
+    @GetMapping("/login")
+    public String login(Model model) {
+        
+        return "admin/login";
+    }
 
-	@GetMapping("/register")
-	public String register(Model model) {
-		model.addAttribute("user", new User());
-		return "admin/register";
-	}
+    
 
-	  @PostMapping("/register")
-	    public String registerSubmit(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("user", new User());
+        return "admin/register";
+    }
 
-	        if (result.hasErrors()) {
-	            return "admin/register";
-	        }
+    @PostMapping("/register")
+    public String registerSubmit(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
 
-	        if (userService.findByUserName(user.getUserName()) != null) {
-	            return "redirect:/register?error";
-	        }
+        if (result.hasErrors()) {
+            return "admin/register";
+        }
 
-	        user.setEnabled(true);
-	        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
-	        userService.save(user);
+        if (userService.findByUserName(user.getUserName()) != null) {
+            return "redirect:/register?error";
+        }
 
-	        UserRole userRole = new UserRole();
-	        userRole.setUser(user);
-	        userRole.setRole(roleRepository.findByName("admin"));
-	        userRoleRepository.save(userRole);
+        user.setEnabled(true);
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        userService.save(user);
 
-	        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
-	        return "redirect:/login";
-	    }
+        UserRole userRole = new UserRole();
+        userRole.setUser(user);
+        userRole.setRole(roleRepository.findByName("admin"));
+        userRoleRepository.save(userRole);
 
+        redirectAttributes.addFlashAttribute("successMessage", "Đăng ký thành công!");
+        return "redirect:/login";
+    }
 }
