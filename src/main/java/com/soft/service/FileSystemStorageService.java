@@ -15,26 +15,23 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileSystemStorageService implements StorageService{
 
 	
-	private final Path rootLocation ;
-	
+
+	private final Path rootLocation;
+
 	public FileSystemStorageService() {
+		// TODO Auto-generated constructor stub
 		this.rootLocation = Paths.get("src/main/resources/static/uploads");
 	}
 	@Override
 	public void store(MultipartFile file) {
 		// TODO Auto-generated method stub
 		try {
-			
 			Path destinationFile = this.rootLocation.resolve(
-					Paths.get(file.getOriginalFilename()))
-					.normalize().toAbsolutePath();
-			
+				Paths.get(file.getOriginalFilename())).normalize().toAbsolutePath();
 			try (InputStream inputStream = file.getInputStream()) {
-				Files.copy(inputStream, destinationFile,
-					StandardCopyOption.REPLACE_EXISTING);
-			}
-		}
-		catch (IOException e) {
+				Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+			} 
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

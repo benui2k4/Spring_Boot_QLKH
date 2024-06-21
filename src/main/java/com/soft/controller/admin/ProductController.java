@@ -3,6 +3,7 @@ package com.soft.controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +33,17 @@ public class ProductController {
 	private ProductService productService;
 
 	@GetMapping("/product")
-	public String index(Model model) {
-		List<Product> listProduct = this.productService.getAll();
-		model.addAttribute("listProduct", listProduct);
+	public String index(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
+			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
+		Page<Product> list = this.productService.getAll(pageNo);
+
+		if(keyword != null) {
+			list  = this.productService.searchProduct(keyword, pageNo);	
+		}
+		model.addAttribute("totalPage", list.getTotalPages());
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("listProduct", list);
 		return "admin/product/index";
 	}
 
@@ -50,7 +59,7 @@ public class ProductController {
 	}
 
 	@PostMapping("/product-add")
-	public String save(@ModelAttribute("product") Product product, @RequestParam("fileImage") MultipartFile file) {
+	public String save(Model model,@ModelAttribute("product") Product product, @RequestParam("fileImage") MultipartFile file) {
 
 		this.storageService.store(file);
 		String fileName = file.getOriginalFilename();
@@ -58,8 +67,12 @@ public class ProductController {
 		if (this.productService.create(product)) {
 			return "redirect:/admin/product";
 
+		}else {
+			List<Category> listCate = this.categoryService.getAll();
+			model.addAttribute("listCate", listCate);
+			return "admin/product/add";
 		}
-		return "admin/product/add";
+		
 	}
 
 	@GetMapping("/edit-product/{id}")

@@ -32,9 +32,6 @@
 				</ol>
 			</section>
 			<!-- Main content -->
-			<section class="content">
-
-
 				<div class="box">
 					<div class="box-header with-border">
 
@@ -61,11 +58,6 @@
 								<br />
 							</div>
 						</div>
-
-
-
-
-
 					</div>
 
 					<div class="box-body">
@@ -104,12 +96,7 @@
 						
 							<li th:if="${currentPage > 1}"><a th:href="@{'/admin/category?pageNo='+${currentPage-1}}">«</a></li>
 
-
-
 							<li th:each="i:${#numbers.sequence(1,totalPage)}" th:classappend="${currentPage == i ? 'active' : '' }"><a th:href="@{'/admin/category?keyword='+${keyword}+'&pageNo='+${i}}" th:text="${i}"></a></li>
-
-
-
 
 							<li th:if="${currentPage < totalPage}"><a th:href="@{'/admin/category?pageNo='+${currentPage+1}}">»</a>
 							</li>
