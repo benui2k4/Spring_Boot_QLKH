@@ -66,9 +66,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> getAll(Integer pageNo) {
+	public Page<Product> getAll(Integer pageNo,Integer sizePage) {
 		// TODO Auto-generated method stub
-		Pageable pageable = PageRequest.of(pageNo - 1, 3);
+		Pageable pageable = PageRequest.of(pageNo - 1, sizePage);
 		return this.productRepository.findAll(pageable);
 	}
 
@@ -79,11 +79,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Page<Product> searchProduct(String keyword, Integer pageNo) {
+	public Page<Product> searchProduct(String keyword, Integer pageNo, Integer sizePage) {
 		// TODO Auto-generated method stub
 		List list = this.productRepository.searchProduct(keyword);
 		
-		Pageable pageable = PageRequest.of(pageNo - 1, 3);
+		Pageable pageable = PageRequest.of(pageNo - 1, sizePage);
 		
 		Integer start = (int) pageable.getOffset();
 		
@@ -94,5 +94,44 @@ public class ProductServiceImpl implements ProductService {
 		return new PageImpl<Product>(list, pageable, this.productRepository.searchProduct(keyword).size());
 
 	}
+
+	@Override
+	public List<Product> getLatestNProducts(int count) {
+		// TODO Auto-generated method stub
+		Pageable  pageable = PageRequest.of(0, count); 
+        return productRepository.findTopNProducts(pageable);
+	}
+
+	@Override
+	public List<Product> findMaleProducts() {
+		// TODO Auto-generated method stub
+		return this.productRepository.findMaleProducts();
+	}
+
+	@Override
+	public List<Product> findFemaleProducts() {
+		// TODO Auto-generated method stub
+		return this.productRepository.findFemaleProducts();
+	}
+
+	@Override
+	public List<Product> findOtherGenderProducts() {
+		// TODO Auto-generated method stub
+		return this.productRepository.findOtherGenderProducts();
+	}
+
+	 @Override
+	    public Page<Product> findProductsByCategory(Integer categoryId, int pageNo, int pageSize) {
+	        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+	        return productRepository.findProductsByCategory(categoryId, pageable);
+	    }
+
+	    @Override
+	    public Page<Product> findProductsByCategories(List<Integer> categoryIds, int pageNo, int pageSize) {
+	        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+	        return productRepository.findProductsByCategories(categoryIds, pageable);
+	    }
+
+	
 
 }

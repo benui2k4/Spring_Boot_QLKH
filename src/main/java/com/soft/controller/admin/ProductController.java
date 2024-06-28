@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,10 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.soft.models.Category;
 import com.soft.models.Product;
-
+import com.soft.models.Suppliers;
 import com.soft.service.CategoryService;
 import com.soft.service.ProductService;
 import com.soft.service.StorageService;
+import com.soft.service.SupplierService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -31,14 +35,15 @@ public class ProductController {
 	private StorageService storageService;
 	@Autowired
 	private ProductService productService;
-
+	@Autowired
+	private SupplierService supplierService;
 	@GetMapping("/product")
 	public String index(Model model, @RequestParam(name="keyword",defaultValue = "") String keyword,
 			@RequestParam(name = "pageNo", defaultValue = "1") Integer pageNo) {
-		Page<Product> list = this.productService.getAll(pageNo);
+		Page<Product> list = this.productService.getAll(pageNo, 4);
 
 		if(keyword != null) {
-			list  = this.productService.searchProduct(keyword, pageNo);	
+			list  = this.productService.searchProduct(keyword, pageNo, 4);	
 		}
 		model.addAttribute("totalPage", list.getTotalPages());
 		model.addAttribute("keyword", keyword);
@@ -50,17 +55,28 @@ public class ProductController {
 	@GetMapping("/product-add")
 	public String add(Model model) {
 		Product product = new Product();
-
 		model.addAttribute("product", product);
 		List<Category> listCate = this.categoryService.getAll();
 		model.addAttribute("listCate", listCate);
-
+		
+		List<Suppliers> listSupp = this.supplierService.getAll();
+		model.addAttribute("listSupp", listSupp);
+		
 		return "admin/product/add";
 	}
 
 	@PostMapping("/product-add")
-	public String save(Model model,@ModelAttribute("product") Product product, @RequestParam("fileImage") MultipartFile file) {
-
+	public String save(Model model,@Valid @ModelAttribute("product") Product product, BindingResult bindingResult, @RequestParam("fileImage") MultipartFile file) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("product", product);
+			List<Category> listCate = this.categoryService.getAll();
+			model.addAttribute("listCate", listCate);
+			List<Suppliers> listSupp = this.supplierService.getAll();
+			model.addAttribute("listSupp", listSupp);
+			return "admin/product/add";
+	    }
+		
 		this.storageService.store(file);
 		String fileName = file.getOriginalFilename();
 		product.setImage(fileName);
@@ -68,6 +84,8 @@ public class ProductController {
 			return "redirect:/admin/product";
 
 		}else {
+			List<Suppliers> listSupp = this.supplierService.getAll();
+			model.addAttribute("listSupp", listSupp);
 			List<Category> listCate = this.categoryService.getAll();
 			model.addAttribute("listCate", listCate);
 			return "admin/product/add";
@@ -83,8 +101,10 @@ public class ProductController {
 			return "redirect:/admin/product";
 		}
 		List<Category> listCate = this.categoryService.getAll();
-		model.addAttribute("product", product);
 		model.addAttribute("listCate", listCate);
+		List<Suppliers> listSupp = this.supplierService.getAll();
+		model.addAttribute("listSupp", listSupp);
+		model.addAttribute("product", product);
 		return "admin/product/edit";
 	}
 

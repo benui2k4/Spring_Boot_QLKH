@@ -61,8 +61,7 @@
 					</div>
 
 					<div class="box-body">
-						
-						<table class="table table-bordered">
+							<table class="table table-bordered">
 							<tbody>
 								<tr>
 									<th>ID</th>
@@ -70,6 +69,7 @@
 									<th>Price</th>
 									<th>Image</th>
 									<th>Category</th>
+									<th>Supplier</th>
 									<th>Action</th>
 
 
@@ -84,7 +84,7 @@
 										<img th:src="@{'/uploads/'+${product.image}}" width=60px;>
 									</td>
 									<td th:text="${product.category.categoryName}"></td>
-
+									<td th:text="${product.suppliers.supplierName}"></td>
 									<td>
 										<a
 										th:href="@{/admin/edit-product/{id}(id=${product.id})}"

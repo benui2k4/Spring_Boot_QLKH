@@ -40,11 +40,15 @@ public class FileSystemStorageService implements StorageService{
 	public void init() {
 		// TODO Auto-generated method stub
 		try {
-			Files.createDirectories(rootLocation);
+			if(!Files.exists(rootLocation)) {
+					Files.createDirectories(rootLocation);
+			}
+
+		
 		} catch (Exception e) {
-			// TODO: handle exception
-		}
+			e.printStackTrace();
 	}
 	
+	}
 
-}
+	}

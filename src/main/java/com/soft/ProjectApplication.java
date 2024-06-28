@@ -12,9 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.soft.service.StorageService;
 @ComponentScan("com.soft")
-
 @SpringBootApplication
-
 public class ProjectApplication {
 
 	public static void main(String[] args) {
